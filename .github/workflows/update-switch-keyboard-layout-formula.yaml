@@ -1,0 +1,20 @@
+name: Update switch_keyboard_layout formula
+
+on:
+  repository_dispatch:
+    types: [update-switch_keyboard_layout-formula]
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag name of the release to test'
+        required: true
+
+jobs:
+  update:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch release
+        run: |
+          TAG="${{ github.event.inputs.tag_name || github.event.client_payload.tag }}"
+          echo "$TAG"
